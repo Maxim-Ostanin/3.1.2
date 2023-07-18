@@ -2,23 +2,27 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Edit user</title>
+    <meta charset="UTF-8">
+    <title>Edit user</title>
 </head>
 <body>
 
-<form th:method="PATCH" th:action="@{/users/{id}(id=${user.getId()})}" th:object="${user}">
-  <label for="name">New name</label>
-  <input type="text" th:field="*{name}" id="name">
-  <br/>
-  <label for="surname">New surname</label>
-  <input type="text" th:field="*{lastName}" id="surname">
-  <br/>
-  <label for="age">New age</label>
-  <input type="number" th:field="*{age}" id="age">
-  <br/>
-  <input type="submit" value="Update user"/>
+<form th:method="PATCH" th:action="@{/updateUser}" th:object="${user}">
+
+    <input type="hidden" th:field="*{id}"/>
+    <label for="name">New Name</label>
+    <input type="text" th:field="*{name}" id="name"/>
+    <br/><br>
+    <label for="surname">Surname</label>
+    <input type="text" th:field="*{lastName}" id="surname"/>
+    <br/><br>
+    <label for="age">Age</label>
+    <input type="text" th:field="*{age}" id="age"/>
+    <br/><br>
+    <input type="submit" value="Update user"/>
+
 </form>
 
 </body>
 </html>
+

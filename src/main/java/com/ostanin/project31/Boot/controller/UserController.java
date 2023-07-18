@@ -14,14 +14,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Controller
-public class HelloController {
+public class UserController {
 
 
-    private final UserService userServiceImpl;
+    private final UserService userService;
 
     @Autowired
-    public HelloController(UserService userServiceImpl) {
-        this.userServiceImpl = userServiceImpl;
+    public UserController(UserService userService) {
+        this.userService = userService;
     }
 
     @GetMapping(value = "/")
@@ -36,20 +36,20 @@ public class HelloController {
 
     @GetMapping("/users")
     public String showAllUsers(ModelMap model) {
-        List<User> userList = userServiceImpl.getAllUsers();
+        List<User> userList = userService.getAllUsers();
         model.addAttribute("userList", userList);
         return "users";
     }
 
     @GetMapping("/users/{id}")
     public String showUser(@PathVariable("id") int id, ModelMap model) {
-        model.addAttribute("user", userServiceImpl.getUserById(id));
+        model.addAttribute("user", userService.getUserById(id));
         return "showUser";
     }
 
     @DeleteMapping("/users/{id}")
     public String deleteUser(@PathVariable("id") int id) {
-        userServiceImpl.removeUserById(id);
+        userService.removeUserById(id);
         return "redirect:/users";
     }
 
@@ -60,20 +60,21 @@ public class HelloController {
 
     @PostMapping("users")
     public String create(@ModelAttribute("user") User user) {
-        userServiceImpl.addUser(user.getName(), user.getLastName(), user.getAge());
+        userService.addUser(user);
         return "redirect:/users";
     }
 
     @GetMapping("users/{id}/edit")
     public String edit(Model model, @PathVariable("id") int id) {
-        model.addAttribute("user", userServiceImpl.getUserById(id));
+        model.addAttribute("user", userService.getUserById(id));
         return "edit";
     }
 
     @PatchMapping("users/{id}")
     public String updateUser(@ModelAttribute("user") User user, @PathVariable("id") int id) {
-        userServiceImpl.updateUser(id, user.getName(), user.getLastName(), user.getAge());
+        userService.updateUser(id, user);
         return "redirect:/users";
     }
+
 
 }

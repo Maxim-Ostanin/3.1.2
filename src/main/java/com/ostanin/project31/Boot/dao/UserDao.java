@@ -6,7 +6,7 @@ import com.ostanin.project31.Boot.models.User;
 import java.util.List;
 
 public interface UserDao {
-    void addUser(String name, String lastname, int age);
+    void addUser(User user);
 
     void removeUserById(int id);
 
@@ -14,6 +14,6 @@ public interface UserDao {
 
     User getUserById(int id);
 
-    void updateUser(int id, String name, String lastname, int age);
+    void updateUser(int id, User user);
 
 }
