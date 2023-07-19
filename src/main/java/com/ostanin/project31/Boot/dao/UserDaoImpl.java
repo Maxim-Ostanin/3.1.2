@@ -6,6 +6,7 @@ import com.ostanin.project31.Boot.models.User;
 
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
+import org.hibernate.query.Query;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -26,9 +27,9 @@ public class UserDaoImpl implements UserDao {
     @Override
     public void removeUserById(int id) {
 
-        User user = em.find(User.class, id);
-        em.remove(user);
-
+        Query<User> query = (Query<User>) em.createQuery("delete from User u where id = :userId");
+        query.setParameter("userId", id);
+        query.executeUpdate();
     }
 
     @Override
@@ -45,9 +46,7 @@ public class UserDaoImpl implements UserDao {
 
     @Override
     public void updateUser(int id, User user) {
-        User updUser = em.find(User.class, id);
-        updUser.setName(user.getName());
-        updUser.setLastName(user.getLastName());
-        updUser.setAge(user.getAge());
+
+        em.merge(user);
     }
 }
